@@ -113,21 +113,31 @@ func NewRepeater(config *Config) *Repeater {
 }
 
 func loadConfig(filename string) (*Config, error) {
-	file, err := os.ReadFile(filename)
-	if err != nil {
-		return nil, fmt.Errorf("error reading config file: %w", err)
-	}
+    file, err := os.ReadFile(filename)
+    if err != nil {
+        return nil, fmt.Errorf("error reading config file: %w", err)
+    }
 
-	var config Config
-	if err := json.Unmarshal(file, &config); err != nil {
-		return nil, fmt.Errorf("error parsing config: %w", err)
-	}
+    var config Config
+    if err := json.Unmarshal(file, &config); err != nil {
+        return nil, fmt.Errorf("error parsing config: %w", err)
+    }
 
-	if config.DR600Settings.SelfIP == "" {
-		config.DR600Settings.SelfIP = "0.0.0.0"
-	}
+    // Set defaults for invalid values
+    if config.DR600Settings.SelfIP == "" {
+        config.DR600Settings.SelfIP = "0.0.0.0"
+    }
+    if config.DR600Settings.CallInfoInterval <= 0 {
+        config.DR600Settings.CallInfoInterval = 5
+    }
+    if config.DR600Settings.GpsInfoInterval <= 0 {
+        config.DR600Settings.GpsInfoInterval = 60
+    }
+    if config.DR600Settings.GpsOffset <= 0 {
+        config.DR600Settings.GpsOffset = 1000
+    }
 
-	return &config, nil
+    return &config, nil
 }
 
 func (r *Repeater) Start() error {
@@ -432,61 +442,71 @@ func (r *Repeater) sendCallUpdate(call *Call) {
 }
 
 func (r *Repeater) sendToDispatcher(data string) {
-	if r.DispatcherAddr == nil {
-		return
-	}
+    if r.DispatcherAddr == nil {
+        log.Println("Dispatcher address not configured")
+        return
+    }
 
-	if _, err := r.SIPConn.WriteToUDP([]byte(data), r.DispatcherAddr); err != nil {
-		log.Printf("Dispatcher send error: %v", err)
-	}
+    if r.DispatcherAddr.IP == nil || r.DispatcherAddr.Port <= 0 {
+        log.Println("Invalid dispatcher address configuration")
+        return
+    }
+
+    if _, err := r.SIPConn.WriteToUDP([]byte(data), r.DispatcherAddr); err != nil {
+        log.Printf("Dispatcher send error: %v", err)
+    }
 }
-
 func (r *Repeater) startAudioStream(call *Call) {
-	const (
-		packetSize   = 160 // 20ms at 8000 Hz
-		packetPeriod = 20 * time.Millisecond
-	)
+    const (
+        packetSize   = 160 // 20ms at 8000 Hz
+        packetPeriod = 20 * time.Millisecond
+    )
 
-	r.mu.RLock()
-	audioData, exists := r.AudioFiles[call.SourceID%3+1]
-	r.mu.RUnlock()
+    // Validate call info interval
+    callInfoInterval := time.Duration(r.Config.DR600Settings.CallInfoInterval) * time.Second
+    if callInfoInterval <= 0 {
+        callInfoInterval = 5 * time.Second // Default to 5 seconds if invalid
+    }
 
-	if !exists {
-		audioData = generateDefaultAudio()
-	}
+    r.mu.RLock()
+    audioData, exists := r.AudioFiles[call.SourceID%3+1]
+    r.mu.RUnlock()
 
-	ticker := time.NewTicker(packetPeriod)
-	defer ticker.Stop()
+    if !exists {
+        audioData = generateDefaultAudio()
+    }
 
-	infoTicker := time.NewTicker(time.Duration(r.Config.DR600Settings.CallInfoInterval) * time.Second)
-	defer infoTicker.Stop()
+    ticker := time.NewTicker(packetPeriod)
+    defer ticker.Stop()
 
-	for offset := 0; offset < len(audioData); offset += packetSize {
-		select {
-		case <-ticker.C:
-			end := offset + packetSize
-			if end > len(audioData) {
-				end = len(audioData)
-			}
+    infoTicker := time.NewTicker(callInfoInterval)
+    defer infoTicker.Stop()
 
-			packet := audioData[offset:end]
-			r.broadcastAudio(call, packet)
+    for offset := 0; offset < len(audioData); offset += packetSize {
+        select {
+        case <-ticker.C:
+            end := offset + packetSize
+            if end > len(audioData) {
+                end = len(audioData)
+            }
 
-		case <-infoTicker.C:
-			r.sendCallUpdate(call)
+            packet := audioData[offset:end]
+            r.broadcastAudio(call, packet)
 
-		case <-r.shutdown:
-			return
-		}
-	}
+        case <-infoTicker.C:
+            r.sendCallUpdate(call)
 
-	r.mu.Lock()
-	delete(r.ActiveCalls, call.ID)
-	r.mu.Unlock()
+        case <-r.shutdown:
+            return
+        }
+    }
 
-	r.sendToDispatcher(fmt.Sprintf("CALL_END %s\n", call.ID))
+    r.mu.Lock()
+    delete(r.ActiveCalls, call.ID)
+    r.mu.Unlock()
+
+    r.sendToDispatcher(fmt.Sprintf("CALL_END %s\n", call.ID))
 }
-
 func (r *Repeater) broadcastAudio(call *Call, audio []byte) {
 	r.mu.RLock()
 	defer r.mu.RUnlock()

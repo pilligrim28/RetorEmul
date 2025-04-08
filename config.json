@@ -10,6 +10,10 @@
     "rtp_start_port": 8000,
     "server_ip": "10.21.50.2",
     "server_port": 19888,
+    "call_info_interval": 5,
+    "gps_info_interval": 60,
+    "dispatcher_ip": "10.21.50.2",
+    "dispatcher_port": 19888,
     "login": "1000",
     "password": "111111",
     "min_delay_s": 10,
@@ -267,5 +271,10 @@
       "34": "audio/34.wav",
       "35": "audio/35.wav"
     }
-  }
+  },
+  "ars_settings": {
+    "enabled": true,
+    "default_group": 0,
+    "switch_delay_ms": 500
+}
 }
