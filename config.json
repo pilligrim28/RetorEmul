@@ -1,0 +1,271 @@
+{
+  "device_type": 0,
+  "dr600_settings": {
+    "self_id": 111,
+    "self_name": "test device",
+    "self_ip": "10.21.10.146",
+    "sip_port": 5060,
+    "sip_server_name": "",
+    "sip_local_name": "2000",
+    "rtp_start_port": 8000,
+    "server_ip": "10.21.50.2",
+    "server_port": 19888,
+    "login": "1000",
+    "password": "111111",
+    "min_delay_s": 10,
+    "max_delay_s": 15,
+    "test_cases": [
+      {
+        "source_id": 1135,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 1
+      },
+      {
+        "source_id": 1136,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 2
+      },
+      {
+        "source_id": 1137,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 3
+      },
+      {
+        "source_id": 1138,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 4
+      },
+      {
+        "source_id": 1138,
+        "group_id": 402,
+        "slot": 2,
+        "file_num": 5
+      },
+      {
+        "source_id": 1139,
+        "group_id": 402,
+        "slot": 2,
+        "file_num": 6
+      },
+      {
+        "source_id": 1140,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 7
+      },
+      {
+        "source_id": 1141,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 8
+      },
+      {
+        "source_id": 1142,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 9
+      },
+      {
+        "source_id": 1143,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 10
+      },
+      {
+        "source_id": 1144,
+        "group_id": 402,
+        "slot": 2,
+        "file_num": 11
+      },
+      {
+        "source_id": 1145,
+        "group_id": 402,
+        "slot": 2,
+        "file_num": 12
+      },
+      {
+        "source_id": 1146,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 13
+      },
+      {
+        "source_id": 1147,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 14
+      },
+      {
+        "source_id": 1148,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 15
+      },
+      {
+        "source_id": 1149,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 16
+      },
+      {
+        "source_id": 1150,
+        "group_id": 402,
+        "slot": 2,
+        "file_num": 17
+      },
+      {
+        "source_id": 1151,
+        "group_id": 402,
+        "slot": 2,
+        "file_num": 18
+      },
+      {
+        "source_id": 1152,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 19
+      },
+      {
+        "source_id": 1153,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 20
+      },
+      {
+        "source_id": 1154,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 21
+      },
+      {
+        "source_id": 1155,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 22
+      },
+      {
+        "source_id": 1156,
+        "group_id": 402,
+        "slot": 2,
+        "file_num": 23
+      },
+      {
+        "source_id": 1157,
+        "group_id": 402,
+        "slot": 2,
+        "file_num": 24
+      },
+      {
+        "source_id": 1158,
+        "group_id": 402,
+        "slot": 2,
+        "file_num": 25
+      },
+      {
+        "source_id": 1159,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 26
+      },
+      {
+        "source_id": 1160,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 27
+      },
+      {
+        "source_id": 1161,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 28
+      },
+      {
+        "source_id": 1162,
+        "group_id": 402,
+        "slot": 2,
+        "file_num": 29
+      },
+      {
+        "source_id": 1163,
+        "group_id": 402,
+        "slot": 2,
+        "file_num": 30
+      },
+      {
+        "source_id": 1164,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 31
+      },
+      {
+        "source_id": 1165,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 32
+      },
+      {
+        "source_id": 1166,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 33
+      },
+      {
+        "source_id": 1167,
+        "group_id": 401,
+        "slot": 1,
+        "file_num": 34
+      }
+    ],
+    "Radios": [
+      1135, 1136, 1137, 1138, 1139, 1140, 1141, 1142, 1143, 1144, 1145, 1146,
+      1147, 1148, 1149, 1150, 1151, 1152, 1153, 1154, 1155, 1156, 1157, 1158,
+      1159, 1160, 1161, 1162, 1163, 1164, 1165, 1166, 1167, 1168
+    ],
+    "latitude": 5586800,
+    "longitude": 2822300,
+    "gps_offset": 1000,
+    "calls_enable": true,
+    "gps_enable": true,
+    "audio_files": {
+      "1": "audio/1.wav",
+      "2": "audio/2.wav",
+      "3": "audio/3.wav",
+      "4": "audio/4.wav",
+      "5": "audio/5.wav",
+      "6": "audio/6.wav",
+      "7": "audio/7.wav",
+      "8": "audio/8.wav",
+      "9": "audio/9.wav",
+      "10": "audio/10.wav",
+      "11": "audio/11.wav",
+      "12": "audio/12.wav",
+      "13": "audio/13.wav",
+      "14": "audio/14.wav",
+      "15": "audio/15.wav",
+      "16": "audio/16.wav",
+      "17": "audio/17.wav",
+      "18": "audio/18.wav",
+      "19": "audio/19.wav",
+      "20": "audio/20.wav",
+      "21": "audio/21.wav",
+      "22": "audio/22.wav",
+      "23": "audio/23.wav",
+      "24": "audio/24.wav",
+      "25": "audio/25.wav",
+      "26": "audio/26.wav",
+      "27": "audio/27.wav",
+      "28": "audio/28.wav",
+      "29": "audio/29.wav",
+      "30": "audio/30.wav",
+      "31": "audio/31.wav",
+      "32": "audio/32.wav",
+      "33": "audio/33.wav",
+      "34": "audio/34.wav",
+      "35": "audio/35.wav"
+    }
+  }
+}
